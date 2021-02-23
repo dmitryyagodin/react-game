@@ -46,6 +46,7 @@ class Box extends React.Component {
     const clickedValue = event.target.value;
     
     if (clickedValue) {
+
       this.props.swap(clickedValue);
       this.setState({visibility: 'hidden'});
     }
@@ -53,11 +54,14 @@ class Box extends React.Component {
   
   render() {
     return (
-      <button className="flex-item"
-              style={{visibility: this.props.number ? 'visible' : 'hidden'}}
-              onClick={this.handleClick} value={this.props.number}>
+      <button
+        className="flex-item"
+        style={{visibility: this.props.number ? 'visible' :'hidden'}}
+        onClick={this.props.moves.includes(this.props.position) ? this.handleClick: undefined}
+        value={this.props.number}
+        moves={this.props.moves}>
         {this.props.number}
-      </button>
+        </button>
     )
   }
 }
@@ -73,14 +77,14 @@ function swapNumbers(nums, number) {
 class StartButton extends React.Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleStartButtonClick = this.handleStartButtonClick.bind(this);
     this.state = {
       numbers: [],
       firstGame: true
     }
   }
 
-  handleClick() {
+  handleStartButtonClick() {
     let newNumbers = createRandomNums();
     let randomIndexForNull = Math.floor(Math.random() * 8);
     newNumbers.splice(randomIndexForNull, 0, null)
@@ -93,7 +97,7 @@ class StartButton extends React.Component {
 
   render() {
     return (
-      <button onClick={this.handleClick}>
+      <button onClick={this.handleStartButtonClick}>
         {this.state.firstGame ? 'Start' : 'New game' }
       </button>
     )
@@ -107,19 +111,59 @@ class Board extends React.Component {
     this.handleSwap = this.handleSwap.bind(this);
     this.handleStart = this.handleStart.bind(this);
     this.state = {
-      numbers: [1, 2, 3, 4, 5, 6, 7, 8, null]
+      numbers: [1, 2, 3, 4, 5, 6, 7, 8, null],
+      possibleClicks: [5, 7]
     }
   }
 
   handleStart(numbers) {
     this.setState({numbers: numbers});
-  }  
+  }
+
+  definePossibleMoves() {
+    let nums = this.state.numbers;
+    let nullIndex = nums.indexOf(null);
+    let moves;
+    switch (nullIndex) {
+      case 0:
+        moves = [1, 3];
+        break;
+      case 1:
+        moves = [0, 2, 4];
+        break;
+      case 2:
+        moves = [1, 5];
+        break;
+      case 3:
+        moves = [0, 4, 6];
+        break;
+      case 4:
+        moves = [1, 3, 5, 7];
+        break;
+      case 5:
+        moves = [2, 4, 8];
+        break;
+      case 6:
+        moves = [3, 7];
+        break;
+      case 7:
+        moves = [4, 6, 8];
+        break;
+      case 8:
+        moves = [5, 7]
+        break;
+    }
+
+    return moves
+}
 
   handleSwap(number) {
-    console.log("HandleSwap number: ", number)
-    console.log("HandleSwap numbers: ", this.state.numbers)
     let nums = this.state.numbers;
-    this.setState({ numbers: swapNumbers(nums, number)})} 
+    this.setState({ 
+      numbers: swapNumbers(nums, number),
+      possibleClicks: this.definePossibleMoves()});
+}
+
   
   render() {
     const numbers = this.state.numbers;
@@ -128,7 +172,12 @@ class Board extends React.Component {
         <StartButton start={this.handleStart}/> 
         <div className="flex-container">
           {numbers.map((val, i) => 
-            <Box key={i+1} number={val} swap={this.handleSwap}/>)}
+            <Box
+              key={i}
+              position={i}
+              number={val}
+              swap={this.handleSwap}
+              moves={this.state.possibleClicks} />)}
         </div>
       </React.Fragment>
     );
