@@ -1,3 +1,30 @@
+const Title = () => <h1>8 PUZZLE</h1>;
+
+class DemoButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      autoPlay: true
+    }
+  }
+  
+  handleClick() {
+    const demoNumbers = [3, 4, 2, 5, 1, 6, 7, 8, null];
+    this.props.demo(demoNumbers);
+  }
+
+  render() {
+    return (
+      <button className="controls-btn" onClick={this.handleClick}>
+        DEMO
+      </button>
+    );
+  }
+}
+
+const MovesCounter = (props) => <p>{props.movesMade}</p> 
+
 // check if the generated ordered array can be solved with the game rules
 function puzzleSolvable(nums) {
     let arr = [...nums];
@@ -21,8 +48,7 @@ function puzzleSolvable(nums) {
     return count % 2 === 0 // if the count is odd puzzle is unsolvable https://www.geeksforgeeks.org/check-instance-8-puzzle-solvable/
   }
 
-
-  // put integers from 1 to 8 in a randomly ordered array  
+// put integers from 1 to 8 in a randomly ordered array  
 function createRandomNums() {
   let arr = [];
 
@@ -61,7 +87,7 @@ class Box extends React.Component {
         value={this.props.number}
         moves={this.props.moves}>
         {this.props.number}
-        </button>
+      </button>
     )
   }
 }
@@ -77,14 +103,14 @@ function swapNumbers(nums, number) {
 class StartButton extends React.Component {
   constructor(props) {
     super(props);
-    this.handleStartButtonClick = this.handleStartButtonClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
       numbers: [],
       firstGame: true
     }
   }
 
-  handleStartButtonClick() {
+  handleClick() {
     let newNumbers = createRandomNums();
     let randomIndexForNull = Math.floor(Math.random() * 8);
     newNumbers.splice(randomIndexForNull, 0, null)
@@ -97,32 +123,55 @@ class StartButton extends React.Component {
 
   render() {
     return (
-      <button onClick={this.handleStartButtonClick}>
-        {this.state.firstGame ? 'Start' : 'New game' }
+      <button
+        className="controls-btn"
+        onClick={this.handleClick}>
+          {this.state.firstGame ? 'PLAY' : <i className="fa fa-refresh"></i>}
       </button>
     )
   }
 }
 
 
-class Board extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleSwap = this.handleSwap.bind(this);
     this.handleStart = this.handleStart.bind(this);
+    this.handleDemo = this.handleDemo.bind(this);
     this.state = {
       numbers: [1, 2, 3, 4, 5, 6, 7, 8, null],
-      possibleClicks: [5, 7]
+      possibleClicks: [],
+      movesMade: 0
     }
   }
 
-  handleStart(numbers) {
-    this.setState({numbers: numbers});
+  handleDemo(demoNumbers) { 
+    this.setState({
+      numbers: demoNumbers,
+      possibleClicks: [],
+      movesMade: 0
+    });
+
+    let demoSteps = [6, 2, 4, 3, 5, 1, 3, 4, 2, 3, 4, 5, 1, 4, 5, 2, 3, 6];
+    demoSteps.forEach((step, i) => {
+      setTimeout(() => {
+        this.handleSwap(step);
+      }, (i+1) * 1200);
+    });
   }
 
-  definePossibleMoves() {
-    let nums = this.state.numbers;
-    let nullIndex = nums.indexOf(null);
+  handleStart(randomNumbers) {
+    console.log("HANDLE START: ", this.state.possibleClicks)
+    this.setState({
+      numbers: randomNumbers,
+      possibleClicks: this.definePossibleMoves(randomNumbers),
+      movesMade: 0
+    });
+  }
+
+  definePossibleMoves(randomNumbers) {
+    let nullIndex = randomNumbers.indexOf(null);
     let moves;
     switch (nullIndex) {
       case 0:
@@ -161,15 +210,23 @@ class Board extends React.Component {
     let nums = this.state.numbers;
     this.setState({ 
       numbers: swapNumbers(nums, number),
-      possibleClicks: this.definePossibleMoves()});
-}
+      possibleClicks: this.definePossibleMoves(nums),
+      movesMade: this.state.movesMade + 1});
+  }
 
   
   render() {
+    const goal = '123456780';
     const numbers = this.state.numbers;
     return (
       <React.Fragment>
-        <StartButton start={this.handleStart}/> 
+        <Title />
+        {/* <p>{numbers}</p> */}
+        <div className='controls-div'>
+          <StartButton start={this.handleStart} />
+          <MovesCounter movesMade={this.state.movesMade}/>
+          <DemoButton demo={this.handleDemo}/>
+        </div>
         <div className="flex-container">
           {numbers.map((val, i) => 
             <Box
@@ -184,4 +241,4 @@ class Board extends React.Component {
   }
 }
   
-ReactDOM.render(<Board />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
