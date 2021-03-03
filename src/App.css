@@ -215,14 +215,16 @@ input[type=radio]:checked + label {
 
 .modal-content {
   background-color: #fefefe;
-  margin: auto;
+  /* margin: auto; */
   padding: 20px;
   border: 1px solid #888;
-  width: 60%;
+  /* width: 60%; */
   position: fixed;
   height: 20%;
   top: 40%;
-  left: 10%;
+  left: 20%;
+  right: 20%;
+  color: black;
 }
 
 .modal-autoplay-content {

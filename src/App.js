@@ -10,6 +10,7 @@ import swapNumbers from './swapNumbers.js';
 import defineMoves from './defineMoves.js';
 import clickSound from './clickSound';
 import { VscGithubAlt } from "react-icons/vsc";
+import playWin from "./playWin.js";
 
 // import getLocalStorage from './getLocalStorage';
 
@@ -84,11 +85,13 @@ class App extends React.Component {
 
   handleSwap(number) {
     let nums = this.state.numbers;
+    let toWin = this.state.toWin;
     this.state.sound === 'on' && clickSound('valid');
     this.setState({ 
       numbers: swapNumbers(nums, number),
       moves: defineMoves(nums),
       movesMade: this.state.movesMade + 1});
+    nums.every((item, i) => item === toWin[i]) && playWin();
   }
 
   closeModal() {
@@ -114,6 +117,7 @@ class App extends React.Component {
     const numbers = this.state.numbers;
     const toWin = this.state.toWin;
     const movesMade = this.state.movesMade;
+
     return (
       <div className={this.state.theme === 'dark' ? 'App dark' : 'App'}>
         <header className="App-header">
@@ -145,13 +149,13 @@ class App extends React.Component {
 
         { numbers.every((item, i) => item === toWin[i]) && 
         <div className="modal" style={this.state.modalStyle}>
-          <div className="modal-content" style={this.state.theme === 'dark' && {color: "black"}}>
-            <span onClick={this.closeModal} className="close">&times;</span>
-           <p>Congratulations!</p>
-           <p>You solved this puzzle in 
+            <div className="modal-content">
+              <span onClick={this.closeModal} className="close">&times;</span>
+            <p>Congratulations!</p>
+            <p>You solved this puzzle in 
              {this.state.stats === 'counts' ? " " + movesMade + " moves" :
               " " + this.state.time + " seconds. (Sorry! I haven't figured out yet how to stop the timer)"}</p>
-          </div>
+            </div>
 
         </div>}
         <Settings settings={this.updateSettings}/>
