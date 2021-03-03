@@ -5,7 +5,17 @@ export default class Timer extends React.Component {
     super(props);
     this.state = {
       time: 0,
+      gamesPlayed: 0,
     };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.gamesPlayed !== state.gamesPlayed) {
+      return { gamesPlayed: props.gamesPlayed,
+               time: 0,
+      };
+    }
+    return null;
   }
 
   componentWillUnmount() {
@@ -29,7 +39,11 @@ export default class Timer extends React.Component {
 
   render() {
     return (
-      <div className="play-stats">TIME: {this.state.time}</div>
+      <>
+      {this.state.gamesPlayed === 0 ?
+      <div className="play-stats">TIME: 00:00</div> : 
+      <div className="play-stats">TIME: {this.state.time}</div>}
+      </>
     );
   }
 }

@@ -14,14 +14,13 @@
   width: 100%;
   height: 10vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   font-size: calc(10px + 2vmin);
   color: #f1f1f1;
 }
 
-h1 {
+h1, h2 {
   margin: 0;
 }
 
@@ -46,7 +45,7 @@ h1 {
 }
 
 .flex-item:hover {
-  background-color: #282c34;
+  background-color: hsl(271, 87%, 33%);
   color: #f1f1f1;
 }
 
@@ -62,6 +61,21 @@ h1 {
   overflow-x: hidden;
   transition: 0.5s;
 }
+
+.overlay-intro {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+
 
 .overlay-content {
   position: relative;
@@ -108,19 +122,25 @@ h1 {
 
 .controls-div {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 300px;
 }
+
+.controls-div :nth-child(1) { order: 1; }
+.controls-div :nth-child(2) { order: 3; }
+.controls-div :nth-child(3) { order: 2; }
 
 .controls-btn {
   font-size: 1em;
   width: 100px;
+  height: 40px;
   cursor: pointer;
+  border-radius: 7px;
 }
 
 .controls-btn:hover,
 .controls-btn-dark:hover {
-  background-color: grey;
+  background-color: hsl(271, 87%, 33%);
   color: #f1f1f1;
 }
 
@@ -128,7 +148,7 @@ h1 {
   font-size: 1em;
   width: 100px;
   cursor: pointer;
-  background-color: black;
+  background-color: rgb(31, 27, 27);
   color: whitesmoke;
 }
 
@@ -137,6 +157,10 @@ h1 {
   color: #f1f1f1;
 }
 
+.stats-info {
+  line-height: 40px;
+  font-size: 1.2em;
+}
 
 /* Source: https://www.viralpatel.net/css-radio-button-checkbox-background/ */
 input[type=radio] {
@@ -151,11 +175,12 @@ input[type=radio] + label {
   color: #282c34;
   background-color: #e7e7e7;
   border-color: #ddd;
+  cursor: pointer;
 }
 
 input[type=radio]:checked + label { 
   /* background-image: none; */
-  background-color:#555353;
+  background-color:hsl(271, 87%, 33%);
   color: white;
 }
 
@@ -213,8 +238,6 @@ input[type=radio]:checked + label {
   color: #282c34;
 }
 
-
-
 .close {
   color: #aaaaaa;
   float: right;
@@ -232,4 +255,23 @@ input[type=radio]:checked + label {
 .dark {
   background-color: #282c34;
   color: #fefefe
+}
+
+.intro {
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+table {
+  width: 140px;
+  height: 140px;
+}
+
+table td {
+  border-collapse: collapse;
+  background-color: white;
+  color: #282c34;
+  font-size: 2em;
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { VscMenu, VscChromeClose } from "react-icons/vsc";
 import clickSound from './clickSound';
-import getLocalStorage from './getLocalStorage';
 
 
 export default class Settings extends React.Component {
@@ -13,8 +12,8 @@ export default class Settings extends React.Component {
     this.state = {
       style: {width: '0%'},
       sound: 'off',
-      level: 'easy',
-      mode: 'counts',
+      mode: 'default',
+      stats: 'counts',
       theme: 'light' 
     }
   }
@@ -25,7 +24,7 @@ export default class Settings extends React.Component {
     this.setState({
       [name]: value
     });
-    localStorage.setItem(name, value)
+    // localStorage.setItem(name, value)
     this.props.settings({[name]: value})
   }
   
@@ -52,7 +51,7 @@ export default class Settings extends React.Component {
               <span onClick={this.closeSettings}><VscChromeClose/></span>
             </div>
             <div className="settings-group">
-                <h2>Sound</h2>
+                <h3>Sound</h3>
                 <input type="radio" id="off" value="off" name="sound" checked={this.state.sound === 'off'} onChange={this.handleChange}/>
                   <label htmlFor="off">Off</label>
                 <input type="radio" id="on" value="on" name="sound" checked={this.state.sound === 'on'} onChange={this.handleChange}/>
@@ -60,31 +59,28 @@ export default class Settings extends React.Component {
               </div>
       
               <div className="settings-group">
-                <h2>Level</h2>
-                <input type="radio" id="easy" value="easy" name="level" checked={this.state.level === 'easy'} onChange={this.handleChange}/>
-                 <label htmlFor="easy">Easy</label>
-                <input type="radio" id="medium" value="medium" name="level" checked={this.state.level === 'medium'} onChange={this.handleChange}/>
-                  <label htmlFor="medium">Medium</label>
-                <input type="radio" id="hard" value="hard" name="level" checked={this.state.level === 'hard'} onChange={this.handleChange}/>
-                  <label htmlFor="hard">Hard</label>
+                <h3>Mode</h3>
+                <input type="radio" id="default" value="default" name="mode" checked={this.state.mode === 'default'} onChange={this.handleChange}/>
+                  <label htmlFor="default">Default</label>
+                <input type="radio" id="random" value="random" name="mode" checked={this.state.mode === 'random'} onChange={this.handleChange}/>
+                  <label htmlFor="random">Random</label>
               </div>
 
               <div className="settings-group" >
-                <h2>Play mode</h2>
-                <input type="radio" id="counts" value="counts" name="mode" checked={this.state.mode === 'counts'} onChange={this.handleChange}/>
+                <h3>Stats</h3>
+                <input type="radio" id="counts" value="counts" name="stats" checked={this.state.stats === 'counts'} onChange={this.handleChange}/>
                   <label htmlFor="counts">Counts</label>
-                <input type="radio" id="timed" value="timed" name="mode" checked={this.state.mode === 'timed'} onChange={this.handleChange}/>
+                <input type="radio" id="timed" value="timed" name="stats" checked={this.state.stats === 'timed'} onChange={this.handleChange}/>
                   <label htmlFor="timed">Timed</label>
               </div>
 
               <div className="settings-group" >
-                <h2>Color Theme</h2>
+                <h3>Theme</h3>
                 <input type="radio" id="light" value="light" name="theme" checked={this.state.theme === 'light'} onChange={this.handleChange}/>
                   <label htmlFor="light">Light</label>
                 <input type="radio" id="dark" value="dark" name="theme" checked={this.state.theme === 'dark'} onChange={this.handleChange}/>
                   <label htmlFor="dark">Dark</label>
               </div>
-
           </div>
         </div>
       </>
