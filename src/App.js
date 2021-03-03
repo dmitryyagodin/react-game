@@ -9,6 +9,7 @@ import Timer from './Timer';
 import swapNumbers from './swapNumbers.js';
 import defineMoves from './defineMoves.js';
 import clickSound from './clickSound';
+import { VscGithubAlt } from "react-icons/vsc";
 
 // import getLocalStorage from './getLocalStorage';
 
@@ -102,7 +103,7 @@ class App extends React.Component {
       toWin: [],
       gamesPlayed: 0,
     })
-    if (this.state.gameLevel === 2) {
+    if (this.state.gameLevel === 10) {
       alert("You mastered all the levels! Try playing random sets as much as you want.")
       this.setState({gameLevel: 0});
     }
@@ -139,11 +140,12 @@ class App extends React.Component {
           numbers={this.state.numbers}
           moves={this.state.moves}
           toWin={this.state.toWin}
-          swap={this.handleSwap} />
+          swap={this.handleSwap}
+          sound={this.state.sound} />
 
         { numbers.every((item, i) => item === toWin[i]) && 
         <div className="modal" style={this.state.modalStyle}>
-          <div className="modal-content">
+          <div className="modal-content" style={this.state.theme === 'dark' && {color: "black"}}>
             <span onClick={this.closeModal} className="close">&times;</span>
            <p>Congratulations!</p>
            <p>You solved this puzzle in 
@@ -155,9 +157,11 @@ class App extends React.Component {
         <Settings settings={this.updateSettings}/>
         <Intro />   
         <footer className="App-footer">
-          <div><a href="https://rs.school/react/"><img src={rs_school_js} alt="RS School logo" style={{height: '5vh', float: 'right'}}/></a></div>
-          <div >by Dmitry Yagodin</div>
-          <div><a href="https://github.com/dmitryyagodin">(GitHub)</a></div>
+          <div className="footer-div">
+            <div><a href="https://rs.school/react/"><img src={rs_school_js} alt="RS School logo" style={{height: '5vh', float: 'right'}}/></a></div>
+            <div>Dmitry Yagodin <br></br>2021</div>
+            <a href="https://github.com/dmitryyagodin"><VscGithubAlt/></a>
+          </div>
         </footer>
       </div>
     );    

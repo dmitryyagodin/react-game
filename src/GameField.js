@@ -43,7 +43,8 @@ export default class GameField extends React.Component {
                 position={i}
                 number={val}
                 swap={this.handleSwap}
-                moves={this.state.moves}/>
+                moves={this.state.moves}
+                sound={this.props.sound}/>
               )
             }
       </div>

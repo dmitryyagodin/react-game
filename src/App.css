@@ -15,13 +15,30 @@
   height: 10vh;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   font-size: calc(10px + 2vmin);
   color: #f1f1f1;
 }
 
+.App-footer {
+  font-size: 1em;
+}
+
+.footer-div {
+  display: flex;
+  width: 350px;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh;
+}
+
 h1, h2 {
   margin: 0;
+}
+
+a {
+  color: #f1f1f1;
+  font-size: 1.6em;
 }
 
 .flex-container {
@@ -74,8 +91,6 @@ h1, h2 {
   overflow-x: hidden;
   transition: 0.5s;
 }
-
-
 
 .overlay-content {
   position: relative;
@@ -179,7 +194,6 @@ input[type=radio] + label {
 }
 
 input[type=radio]:checked + label { 
-  /* background-image: none; */
   background-color:hsl(271, 87%, 33%);
   color: white;
 }
@@ -204,7 +218,7 @@ input[type=radio]:checked + label {
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 60%;
   position: fixed;
   height: 20%;
   top: 40%;

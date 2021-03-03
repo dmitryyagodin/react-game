@@ -10,7 +10,7 @@ export default class Box extends React.Component {
 
   
   handleErrorClick() {
-    clickSound('error');
+    this.props.sound === 'on' && clickSound('error');
   }
 
   handleClick(event) {
