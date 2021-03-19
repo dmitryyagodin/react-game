@@ -1,4 +1,5 @@
 # 8 Puzzle game
+Try it on [GitHub pages](https://dmitryyagodin.github.io/react-game/)
 
 ## Goal
 The goal of the game is to move the numbers to their original positions after they were mixed inside the board.
