@@ -125,13 +125,13 @@ a {
 }
 
 .settings-icon {
-  width: 300px;
+  width: 360px;
   float: right;
   font-size: 30px;
   cursor: pointer;
   text-align: right;
   position: fixed;
-  top: 10px;
+  top: 35px;
   color: #f1f1f1;
 }
 
